@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>state and lifecycle</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <script type="text/babel">
+        class Clock extends React.Component{
+            constructor(props){
+                super (props);
+                this.state={date:new Date()};
+            }
+            render(){
+                return(
+                        <div>
+                            <h1>生命周期和state</h1>
+                            <h2>It is {this.state.date.toLocaleTimeString()}</h2>
+                        </div>
+                );
+            }
+            tick(){
+                this.setState({date:new Date()});
+            }
+            //在初始阶段渲染完成后，设置state值，获取实时时间
+            componentDidMount(){
+                   this.intervalId=setInterval(()=>this.tick(),1000);
+            }
+
+            //在销毁阶段
+            componentWillUnmount(){
+                clearInterval(this.intervalId);
+            }
+
+        }
+
+        ReactDOM.render(<Clock/>,document.body);
+    </script>
+</body>
+</html>

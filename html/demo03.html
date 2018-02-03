@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Components</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+   <div id="firstComponent"></div>
+   <div id="secondComponent"></div>
+   <script type="text/babel">
+       //使用方法定义组件
+       function Welcome(props) {
+           return <h1>Hello,{props.name}</h1>
+       }
+
+       //使用类定义组件
+       class Wel extends React.Component{
+           render(){
+               return <h1>Hello,{this.props.name}</h1>
+           }
+       }
+
+       ReactDOM.render(<Welcome name="用function定义的Welcome组件"/>,document.getElementById("firstComponent"));
+       ReactDOM.render(<Wel name="用class定义的Wel组件"/>,document.getElementById("secondComponent"));
+   </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSX demo</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<script type="text/babel">
+    const user={
+        firstName:'Harper',
+        lastName:'Perez'
+    };
+    //格式化名字的方法
+    function formatName(user){
+        return user.firstName + ' '+user.lastName;
+    }
+
+    //设置css样式，采用驼峰命名法
+    let style={
+        color:"red",
+        backgroundColor:"gray"
+    };
+    //判断user!=null，返回元素
+    function getGreeting(user){
+        if(user)
+            return <h1 style={style}>Hello,{formatName(user)}!</h1>;
+        else
+            return <h1>Hello,Stranger</h1>;
+    }
+
+    //两个参数，一个是标签，一个是放置的位置。这里是在body中放入h1标签
+    ReactDOM.render(getGreeting(user),document.body);
+</script>
+</body>
+</html>

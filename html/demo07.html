@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Handle Events</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <script type="text/babel">
+        class Toggle extends React.Component{
+            constructor(props){
+                super(props);
+                //默认按钮是开的
+                this.state={isToggleOn:true};
+                //解决handleClick中this的绑定,方法1
+                //this.handleClick=this.handleClick.bind(this);
+            }
+
+            //这里必须注意handleClick方法中this的绑定，如果不绑定this为undefined
+            // 我们希望将this绑定到Toggle类创建的对象上，有两种解决方法
+            handleClick(){
+                //箭头函数，表示参数是preState，当参数只有一个时()可以省略。
+                // 返回了一个对象，只有一个return语句时，{}和return可以省略，返回对象时要在对象外加()。
+                this.setState(preState=>({isToggleOn:!preState.isToggleOn}));
+
+            }
+            render(){
+                //解决 handleClick方法中this的绑定，可以使用箭头函数，箭头函数中的this作用域为定义时的作用域
+                return(
+                    <button onClick={e=>this.handleClick(e)}>
+                        {this.state.isToggleOn?'ON':'OFF'}
+                    </button>
+                );
+            }
+        }
+        ReactDOM.render(<Toggle/>,document.body);
+    </script>
+</body>
+</html>

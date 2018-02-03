@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <script type="text/babel">
+        class NameForm extends React.Component{
+            constructor(props){
+                super(props);
+                this.state={nameValue:'',essayValue:'',flavorValue:'grapefruit'};
+                this.handleNameChange=this.handleNameChange.bind(this);
+                this.handleSubmit=this.handleSubmit.bind(this);
+                this.handleEssayChange=this.handleEssayChange.bind(this);
+                this.handleFlavorChange=this.handleFlavorChange.bind(this);
+            }
+            handleNameChange(event){
+                this.setState({nameValue:event.target.value});
+            }
+            handleSubmit(event){
+                alert('A name was submitted:'+this.state.nameValue+' Essay:'+this.state.essayValue+' flavor:'+this.state.flavorValue);
+                alert(`selected file-${this.fileInput.files[0].name}`);
+            }
+            handleEssayChange(event){
+                this.setState({essayValue:event.target.value});
+            }
+            handleFlavorChange(event){
+                this.setState({flavorValue:event.target.value});
+            }
+            render(){
+                return(
+                        <form onSubmit={this.handleSubmit}>
+                            <label>
+                                Name:
+                                <input type="text" value={this.state.nameValue} onChange={this.handleNameChange}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Essay:
+                                <textarea value={this.state.essayValue} onChange={this.handleEssayChange}/>
+                            </label>
+                            <br/>
+                            <label>
+                                Pick your favorite La Croix flavor:
+                                <select value={this.state.flavorValue} onChange={this.handleFlavorChange}>
+                                    <option value="grapefruit">Grapefruit</option>
+                                    <option value="lime">Lime</option>
+                                    <option value="coconut">Coconut</option>
+                                    <option value="mango">Mango</option>
+                                </select>
+                            </label>
+                            <br/>
+                            <label>
+                                Upload file:
+                                <input type="file" ref={input=>{this.fileInput=input}}/>
+                            </label>
+                             <br/>
+                            <input type="submit" value="Submit"/>
+                        </form>
+                );
+            }
+        }
+
+        ReactDOM.render(<NameForm/>,document.body);
+    </script>
+
+</body>
+</html>

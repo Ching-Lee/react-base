@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>state and lifecycle</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<script type="text/babel">
+    class Content extends React.Component {
+        constructor(props){
+            super(props);
+        }
+        render() {
+            return <p>{this.props.selectName}</p>;
+        }
+    }
+
+
+    class Comment extends React.Component {
+       constructor(props){
+           super(props);
+           this.state={names:["Tim","John","Hank"],selectName:''};
+       }
+        //当select发生改变时，设置state的selectName的值
+       handleSelect(event){
+           this.setState({selectName:event.target.nameValue});
+       }
+        render() {
+            let options=[];
+            for(let option in this.state.names){
+                options.push(<option value={this.state.names[option]}>{this.state.names[option]}</option>);
+            }
+            //注意，这里必须使用箭头函数，需要将 handleSelect方法中的this作用域在定义时指定为组件（也就是类）
+            return (
+                <div>
+                    <select onChange={(event)=>this.handleSelect(event)}>
+                        {options}
+                    </select>
+                    <Content selectName={this.state.selectName}/>
+                </div>
+
+            );
+        }
+    }
+
+    ReactDOM.render(<Comment/>,document.body);
+</script>
+
+</body>
+</html>

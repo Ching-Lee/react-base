@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Conditional Rendering</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<script type="text/babel">
+    //登录用户使用的组件
+    class UserGreeting extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            return <h1>Welcome back!</h1>
+        }
+    }
+    //未登录用户使用的组件
+    class GuestGreeting extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            return <h1>Please sign up</h1>
+        }
+    }
+
+    //将上面两个组件组成一个父组件
+    class Greeting extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            if (this.props.isLoggedIn) {
+                return <UserGreeting/>
+            }
+            return <GuestGreeting/>
+        }
+    }
+     //登录按钮
+    class LoginButton extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        //要记得在这里定义onclick事件，否则父组件无法触发
+        render() {
+            return <button onClick={this.props.onclick}>Login</button>;
+        }
+    }
+    //注销按钮
+    class LogoutButton extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        //要记得在这里定义onclick事件，否则父组件无法触发
+        render() {
+            return <button onClick={this.props.onclick}>Logout</button>;
+        }
+    }
+    //按钮父组件
+    class LoginControl extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {isLoggedIn: false};
+            this.handleLoginClick=this.handleLoginClick.bind(this);
+            this.handleLogoutClick=this.handleLogoutClick.bind(this);
+        }
+
+        handleLoginClick(){
+            this.setState({isLoggedIn:true});
+        }
+
+        handleLogoutClick(){
+            this.setState({isLoggedIn: false});
+        }
+
+        render() {
+            let button=null;
+            if (this.state.isLoggedIn) {
+               button = <LogoutButton onclick={this.handleLogoutClick}/>
+            } else {
+               button = <LoginButton onclick={this.handleLoginClick}/>
+            }
+            return (
+                  <div>
+                      <Greeting isLoggedIn={this.state.isLoggedIn}/>
+                      {button}
+                  </div>
+            );
+        }
+    }
+
+    ReactDOM.render(<LoginControl/>,document.body);
+</script>
+
+</body>
+</html>
